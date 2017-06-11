@@ -22,12 +22,10 @@ var controlPanel = (function () {
 
 		
 		//Register event that tracks timeupdate changes during the video
-		currentVideo.addEventListener('timeupdate',_changeTime);
+		currentVideo.addEventListener('timeupdate', _changeTime);
 
 		//Set Html Total Time Number accordingly to the video
-		currentVideo.addEventListener('playing',function() {
-			totalTime.innerHTML = _readableTime(currentVideo.duration);
-		});
+		currentVideo.addEventListener('playing', _renderTotalTime);
 		
 	}
 
@@ -88,6 +86,10 @@ var controlPanel = (function () {
 	function _changeTime(e) {
 		
 		currentTime.innerHTML = _readableTime(currentVideo.currentTime);
+	}
+
+	function _renderTotalTime() {
+		totalTime.innerHTML = _readableTime(currentVideo.duration);
 	}
 
 	function _updateTimeDisplay() {
