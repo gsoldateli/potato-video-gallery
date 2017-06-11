@@ -8,7 +8,9 @@ var controlPanel = (function () {
 	var totalTime;
 
 	var buttons = {};
-
+	function currentVideo() {
+		return currentVideo;
+	}
 	function init() {
 		currentVideo = document.getElementById('p-current-video');	
 		totalTime = document.getElementById('p-total-time');
@@ -18,10 +20,12 @@ var controlPanel = (function () {
 		_registerButtons();
 		buttons.volume.value = volume() * 100;
 
-
-		totalTime.innerHTML = _readableTime(currentVideo.duration);
-
+		
+		//Register event that tracks timeupdate changes during the video
 		currentVideo.addEventListener('timeupdate',_changeTime);
+
+		//Set Html Total Time Number accordingly to the video
+		totalTime.innerHTML = _readableTime(currentVideo.duration);
 	}
 
 	function play() {
@@ -81,14 +85,12 @@ var controlPanel = (function () {
 	function _changeTime(e) {
 		
 		currentTime.innerHTML = _readableTime(currentVideo.currentTime);
-		console.log(currentVideo.currentTime);
 	}
 
 	function _updateTimeDisplay() {
         var timePercent = (100 / currentVideo.duration) * currentVideo.currentTime;
         barSeeker.value = timePercent;
         barProgress.value = timePercent;
-        console.log(_readableTime(currentVideo.currentTime));
     };
 
 	function _readableTime(t) {
@@ -145,7 +147,8 @@ var controlPanel = (function () {
 		rewind: rewind,
 		volume: volume,
 		ended: ended,
-		setFullscreen: setFullscreen
+		setFullscreen: setFullscreen,
+		video: currentVideo
 	};
 
 })();

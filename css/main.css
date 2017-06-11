@@ -110,6 +110,11 @@ textarea {
 
 }
 
+.p-player__controls__current-time {
+  color: #fff;
+  line-height: 30px;
+}
+
 
 /* =================================================
 Range Audio Input
