@@ -76,7 +76,14 @@ textarea {
 
     opacity: 0;
 
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.36) 100%);
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.36) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.36) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#5c000000',GradientType=0 );
+
     transition: all .2s ease-out;
+
+
 }
 
 .p-player:hover .p-player__controls  {

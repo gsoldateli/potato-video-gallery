@@ -13,14 +13,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
         <script src="js/main.js"></script>
     </head>
-    <body onload="potatoInit();">
+    <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <p>Potato Player</p>
         <div class="p-player">
-            <video id="p-current-video" class="p-player__video">
+            <video id="p-current-video" class="p-player__video"  preload="metadata">
                 <source src="http://mainline.i3s.unice.fr/mooc/elephants-dream-medium.mp4" type="video/mp4">
             </video>
 
@@ -43,7 +43,8 @@
                     </span>
                 </span>
                 <span class="p-player__controls__current-time">
-                    20:35 / 1:01:59
+                    <span id="p-current-time">00:00</span> / 
+                    <span id="p-total-time">00:00</span>
                 </span>                
                 <span class="right" style="margin-top: 8px;">
                     <span class="p-config-container"><i class="material-icons">settings</i></span>

@@ -4,15 +4,24 @@ var controlPanel = (function () {
 
 	var currentVideo;
 	var playerControls;
+	var currentTime;
+	var totalTime;
 
 	var buttons = {};
 
 	function init() {
 		currentVideo = document.getElementById('p-current-video');	
+		totalTime = document.getElementById('p-total-time');
+		currentTime = document.getElementById('p-current-time');
 		playerControls = document.querySelector('.p-player__controls');	
 
 		_registerButtons();
 		buttons.volume.value = volume() * 100;
+
+
+		totalTime.innerHTML = _readableTime(currentVideo.duration);
+
+		currentVideo.addEventListener('timeupdate',_changeTime);
 	}
 
 	function play() {
@@ -69,9 +78,28 @@ var controlPanel = (function () {
 		}
 	}
 
+	function _changeTime(e) {
+		
+		currentTime.innerHTML = _readableTime(currentVideo.currentTime);
+		console.log(currentVideo.currentTime);
+	}
+
+	function _updateTimeDisplay() {
+        var timePercent = (100 / currentVideo.duration) * currentVideo.currentTime;
+        barSeeker.value = timePercent;
+        barProgress.value = timePercent;
+        console.log(_readableTime(currentVideo.currentTime));
+    };
+
+	function _readableTime(t) {
+        var theMinutes = "0" + Math.floor(t / 60); // Divide seconds to get minutes, add leading zero
+        var theSeconds = "0" + parseInt(t % 60); // Get remainder seconds
+        var theTime = theMinutes.slice(-2) + ":" + theSeconds.slice(-2); // Slice to two spots to remove excess zeros
+        return theTime;
+    };    
+
 	function _setVolume() {
 		var inputValue = buttons.volume.value;
-		console.log(inputValue);
 		if(parseInt(inputValue) === 0) {
 			buttons.volumeToggle.innerHTML = 'volume_off';
 		}
@@ -86,11 +114,15 @@ var controlPanel = (function () {
 	}
 
 	function _toggleSound() {
-		if(buttons.volume.value > 0 ) {
-			_setVolume(0);
+
+		if ( parseInt(volume()) > 0 ) {
+			buttons.volume.value = 0;
 		} else {
-			_setVolume(1);
+			buttons.volume.value =100;
+			
 		}
+		_setVolume();
+		
 	}
 
 	function _registerButtons() {
@@ -124,8 +156,13 @@ function potatoInit() {
 	controlPanel.ended(function(){ alert('Terminou')});
 }
 
+window.onload = function() {
+	potatoInit();
+}
+
 //https://download.blender.org/peach/bigbuckbunny_movies/
 //https://mainline.i3s.unice.fr/mooc/week2p1/video2.mp4
 //https://mainline.i3s.unice.fr/mooc/week2p1/video3.mp4
 //https://mainline.i3s.unice.fr/mooc/week2p1/video4.mp4
+
 
