@@ -25,7 +25,10 @@ var controlPanel = (function () {
 		currentVideo.addEventListener('timeupdate',_changeTime);
 
 		//Set Html Total Time Number accordingly to the video
-		totalTime.innerHTML = _readableTime(currentVideo.duration);
+		currentVideo.addEventListener('playing',function() {
+			totalTime.innerHTML = _readableTime(currentVideo.duration);
+		});
+		
 	}
 
 	function play() {
