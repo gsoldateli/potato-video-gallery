@@ -5,6 +5,7 @@ var controlPanel = (function () {
 	var currentVideo;
 	var playerControls;
 	var currentTime;
+	var timeBaloon;
 	var seekbarBackground;
 	var seekbarProgress;
 	var totalTime;
@@ -19,6 +20,7 @@ var controlPanel = (function () {
 		seekbarBackground = document.querySelector('.p-seekbar-background');
 		totalTime = document.getElementById('p-total-time');
 		currentTime = document.getElementById('p-current-time');
+		timeBaloon = document.querySelector('.p-time-baloon');
 		playerControls = document.querySelector('.p-player__controls');	
 
 
@@ -32,19 +34,8 @@ var controlPanel = (function () {
 		//Set Html Total Time Number accordingly to the video
 		currentVideo.addEventListener('playing', _renderTotalTime);
 		
-		seekbarBackground.addEventListener('click',function(e){
-			var rect = seekbarBackground.getBoundingClientRect();
-			var x = e.clientX - rect.left;
-			console.log(rect);
-
-			var posPercent = (x / rect.width ) * 100;
-
-			//console.log(posPercent);
-			seekbarProgress.style.width = posPercent + '%';
-			currentVideo.currentTime = (currentVideo.duration / 100) * posPercent;
-			//console.log(_readableTime((currentVideo.duration / 100) * posPercent));
-
-		});
+		seekbarBackground.addEventListener('click', _goToMoviePosition);
+		seekbarBackground.addEventListener('mousemove', _showTimeBaloon);
 	}
 
 	function play() {
@@ -99,6 +90,31 @@ var controlPanel = (function () {
 		else {
 			pause();
 		}
+	}
+
+	function _calculateCursorPercentage(e) {
+		var rect = _getBackgroundSeekerRect();
+		var x = e.clientX - rect.left;
+		return (x / rect.width ) * 100;		
+	}
+
+	function _goToMoviePosition(e) {
+		var posPercent = _calculateCursorPercentage(e);
+		seekbarProgress.style.width = posPercent + '%';
+		currentVideo.currentTime = (currentVideo.duration / 100) * posPercent;
+		//console.log(_readableTime((currentVideo.duration / 100) * posPercent));
+	}
+	
+	function _getBackgroundSeekerRect() {
+		return seekbarBackground.getBoundingClientRect();
+	}
+
+
+	function _showTimeBaloon(e, xOffset, yOffset) {
+		var posPercent = _calculateCursorPercentage(e);
+		timeBaloon.style.left = e.clientX+'px';
+
+		timeBaloon.innerHTML = (_readableTime((currentVideo.duration / 100) * posPercent));
 	}
 
 	function _changeTime(e) {
