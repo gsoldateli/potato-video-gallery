@@ -20,13 +20,17 @@
 
         <p>Potato Player</p>
         <div class="p-player">
-            <video id="p-current-video" class="p-player__video">
+            <video id="p-current-video" class="p-player__video" >
                 <source src="http://mainline.i3s.unice.fr/mooc/elephants-dream-medium.mp4" type="video/mp4">
             </video>
 
             <div class="p-player__controls">
                 <div class="p-player__seekbar-containeer">
-                    <div class="p-seekbar"></div>
+                    <div class="p-seekbar-container">
+                        <div class="p-seekbar-background">
+                            <div class="p-seekbar-progress"></div>
+                        </div>
+                    </div>
                 </div>
                 <span class="p-player__controls__play">
                     <i id="p-play-pause-button" class="material-icons">play_arrow</i>

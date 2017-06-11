@@ -5,6 +5,8 @@ var controlPanel = (function () {
 	var currentVideo;
 	var playerControls;
 	var currentTime;
+	var seekbarBackground;
+	var seekbarProgress;
 	var totalTime;
 
 	var buttons = {};
@@ -13,9 +15,12 @@ var controlPanel = (function () {
 	}
 	function init() {
 		currentVideo = document.getElementById('p-current-video');	
+		seekbarProgress = document.querySelector('.p-seekbar-progress');
+		seekbarBackground = document.querySelector('.p-seekbar-background');
 		totalTime = document.getElementById('p-total-time');
 		currentTime = document.getElementById('p-current-time');
 		playerControls = document.querySelector('.p-player__controls');	
+
 
 		_registerButtons();
 		buttons.volume.value = volume() * 100;
@@ -27,6 +32,19 @@ var controlPanel = (function () {
 		//Set Html Total Time Number accordingly to the video
 		currentVideo.addEventListener('playing', _renderTotalTime);
 		
+		seekbarBackground.addEventListener('click',function(e){
+			var rect = seekbarBackground.getBoundingClientRect();
+			var x = e.clientX - rect.left;
+			console.log(rect);
+
+			var posPercent = (x / rect.width ) * 100;
+
+			//console.log(posPercent);
+			seekbarProgress.style.width = posPercent + '%';
+			currentVideo.currentTime = (currentVideo.duration / 100) * posPercent;
+			//console.log(_readableTime((currentVideo.duration / 100) * posPercent));
+
+		});
 	}
 
 	function play() {
@@ -86,6 +104,8 @@ var controlPanel = (function () {
 	function _changeTime(e) {
 		
 		currentTime.innerHTML = _readableTime(currentVideo.currentTime);
+
+		_updateSeekbarProgress();
 	}
 
 	function _renderTotalTime() {
@@ -94,9 +114,12 @@ var controlPanel = (function () {
 
 	function _updateTimeDisplay() {
         var timePercent = (100 / currentVideo.duration) * currentVideo.currentTime;
-        barSeeker.value = timePercent;
-        barProgress.value = timePercent;
     };
+
+    function _updateSeekbarProgress() {
+        var timePercent = (100 / currentVideo.duration) * currentVideo.currentTime;
+        seekbarProgress.style.width = timePercent + '%';
+    }
 
 	function _readableTime(t) {
         var theMinutes = "0" + Math.floor(t / 60); // Divide seconds to get minutes, add leading zero
@@ -172,5 +195,6 @@ window.onload = function() {
 //https://mainline.i3s.unice.fr/mooc/week2p1/video2.mp4
 //https://mainline.i3s.unice.fr/mooc/week2p1/video3.mp4
 //https://mainline.i3s.unice.fr/mooc/week2p1/video4.mp4
+
 
 
