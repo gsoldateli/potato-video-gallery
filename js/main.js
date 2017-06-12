@@ -8,6 +8,7 @@ var controlPanel = (function () {
 	var timeBaloon;
 	var seekbarBackground;
 	var seekbarProgress;
+	var seekbarPosition;
 	var seekbarLoading;
 	var totalTime;
 
@@ -20,6 +21,7 @@ var controlPanel = (function () {
 		seekbarProgress = document.querySelector('.p-seekbar-progress');
 		seekbarLoading = document.querySelector('.p-seekbar-loading');
 		seekbarBackground = document.querySelector('.p-seekbar-background');
+		seekbarPosition = document.querySelector('.p-seekbar-position');
 		totalTime = document.getElementById('p-total-time');
 		currentTime = document.getElementById('p-current-time');
 		timeBaloon = document.querySelector('.p-time-baloon');
@@ -38,6 +40,7 @@ var controlPanel = (function () {
 		
 		seekbarBackground.addEventListener('click', _goToMoviePosition);
 		seekbarBackground.addEventListener('mousemove', _showTimeBaloon);
+		seekbarBackground.addEventListener('mousemove', _updateSeekbarPosition);
 
 		currentVideo.addEventListener('progress', _updateSeekbarLoading);
 
@@ -157,6 +160,7 @@ var controlPanel = (function () {
         seekbarProgress.style.width = timePercent + '%';
     }
 
+    /* TODO: Implement Y threshold for usability improvement */
     function _updateSeekbarLoading() {
 		    var range = 0;
 		    var bf = this.buffered;
@@ -170,9 +174,13 @@ var controlPanel = (function () {
 		    var loadEndPercentage = bf.end(range) / this.duration;
 		    var loadedPercent = loadEndPercentage * 100;
 		    seekbarLoading.style.width = loadedPercent + '%';
-		    
-		    console.log(seekbarLoading.style.width = loadEndPercentage * 100);
 	}
+
+    function _updateSeekbarPosition(e) {
+        var percentage = _calculateCursorPercentage(e);
+        seekbarPosition.style.width = percentage+ '%';
+
+    }	
 
 	function _readableTime(t) {
         var theMinutes = "0" + Math.floor(t / 60); // Divide seconds to get minutes, add leading zero

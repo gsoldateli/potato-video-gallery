@@ -109,11 +109,26 @@ textarea {
   bottom: 0;
   width: 0;
   height: 4px;
-  background-color: rgba(255, 255, 255, 0.55);
+  background-color: rgba(255, 255, 255, 0.3);
 
-  z-index: 2px;
+  z-index: 2;
 }
 
+.p-seekbar-position {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.4);
+
+  z-index: 3;
+}
+
+.p-seekbar-background:hover .p-seekbar-position {
+  display: block;
+}
 .p-seekbar-progress {
   position: absolute;
   left: 0;
@@ -123,7 +138,7 @@ textarea {
   height: 4px;
   background-color: red;
 
-  z-index: 3px;
+  z-index: 4;
 
 }
 
