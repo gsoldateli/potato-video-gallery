@@ -86,6 +86,10 @@ textarea {
 
 }
 
+.p-seekbar-container {
+  position: relative;
+}
+
 .p-seekbar-background {
   position: relative;
   width: 100%;
@@ -112,14 +116,13 @@ textarea {
 
   display: none;
 
-  width: 40px;
-  height: 6px;
+  padding: 2px 4px;
   z-index: 100;
   background-color: #333;
   color: #fff;
 }
 
-.p-seekbar-background:hover .p-time-baloon {
+.p-seekbar-container:hover .p-time-baloon {
   display: block;
 }
 

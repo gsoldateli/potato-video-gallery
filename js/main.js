@@ -102,7 +102,6 @@ var controlPanel = (function () {
 		var posPercent = _calculateCursorPercentage(e);
 		seekbarProgress.style.width = posPercent + '%';
 		currentVideo.currentTime = (currentVideo.duration / 100) * posPercent;
-		//console.log(_readableTime((currentVideo.duration / 100) * posPercent));
 	}
 	
 	function _getBackgroundSeekerRect() {
@@ -112,7 +111,23 @@ var controlPanel = (function () {
 
 	function _showTimeBaloon(e, xOffset, yOffset) {
 		var posPercent = _calculateCursorPercentage(e);
-		timeBaloon.style.left = e.clientX+'px';
+		var baloonXpos = e.clientX - (timeBaloon.offsetWidth/2);
+		var seekRect = _getBackgroundSeekerRect();
+
+		//If extreme left of the player
+		if(baloonXpos <= 0 )
+		{
+			//Fix position at left
+			baloonXpos = 0;
+		}
+		//Or extreme right of the player
+		else if( baloonXpos >= (seekRect.width - (timeBaloon.offsetWidth)) ) {
+			//Fix position at right
+			baloonXpos = (seekRect.width - (timeBaloon.offsetWidth));
+		}
+
+		timeBaloon.style.left = baloonXpos+'px';
+
 
 		timeBaloon.innerHTML = (_readableTime((currentVideo.duration / 100) * posPercent));
 	}
