@@ -8,6 +8,7 @@ var controlPanel = (function () {
 	var timeBaloon;
 	var seekbarBackground;
 	var seekbarProgress;
+	var seekbarLoading;
 	var totalTime;
 
 	var buttons = {};
@@ -17,6 +18,7 @@ var controlPanel = (function () {
 	function init() {
 		currentVideo = document.getElementById('p-current-video');	
 		seekbarProgress = document.querySelector('.p-seekbar-progress');
+		seekbarLoading = document.querySelector('.p-seekbar-loading');
 		seekbarBackground = document.querySelector('.p-seekbar-background');
 		totalTime = document.getElementById('p-total-time');
 		currentTime = document.getElementById('p-current-time');
@@ -36,6 +38,9 @@ var controlPanel = (function () {
 		
 		seekbarBackground.addEventListener('click', _goToMoviePosition);
 		seekbarBackground.addEventListener('mousemove', _showTimeBaloon);
+
+		currentVideo.addEventListener('progress', _updateSeekbarLoading);
+
 	}
 
 	function play() {
@@ -151,6 +156,23 @@ var controlPanel = (function () {
         var timePercent = (100 / currentVideo.duration) * currentVideo.currentTime;
         seekbarProgress.style.width = timePercent + '%';
     }
+
+    function _updateSeekbarLoading() {
+		    var range = 0;
+		    var bf = this.buffered;
+		    var time = this.currentTime;
+		    console.log(bf);
+
+		    while(!(bf.start(range) <= time && time <= bf.end(range))) {
+		        range += 1;
+		    }
+		    var loadStartPercentage = bf.start(range) / this.duration;
+		    var loadEndPercentage = bf.end(range) / this.duration;
+		    var loadedPercent = loadEndPercentage * 100;
+		    seekbarLoading.style.width = loadedPercent + '%';
+		    
+		    console.log(seekbarLoading.style.width = loadEndPercentage * 100);
+	}
 
 	function _readableTime(t) {
         var theMinutes = "0" + Math.floor(t / 60); // Divide seconds to get minutes, add leading zero
