@@ -18,48 +18,65 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <p>Potato Player</p>
-        <div class="p-player">
-            <video id="p-current-video" class="p-player__video" >
-                <source src="http://mainline.i3s.unice.fr/mooc/elephants-dream-medium.mp4" type="video/mp4">
-            </video>
+        
+        <div class="container">
+            <h1>Potato Player</h1>
+            <h3>An aspiring Youtube like Player Made Just 4 Fun</h3>
+            <p>More info at: <a href="https://github.com/gsoldateli/potato-video-gallery">Potato Video Player Github Page</a> </p>
+            <div class="p-player">
+                <video id="p-current-video" class="p-player__video" >
+                    <source src="http://mainline.i3s.unice.fr/mooc/elephants-dream-medium.mp4" type="video/mp4">
+                </video>
 
-            <div class="p-player__controls">
-                <div class="p-player__seekbar-containeer">
-                    <div class="p-seekbar-container">
-                        <span class="p-time-baloon">00:00</span>
-                        <div class="p-seekbar-background">
-                            <div class="p-seekbar-loading"></div>
-                            <div class="p-seekbar-position"></div>
-                            <div class="p-seekbar-progress"></div>
+                <div class="p-player__controls">
+                    <div class="p-player__seekbar-containeer">
+                        <div class="p-seekbar-container">
+                            <span class="p-time-baloon">00:00</span>
+                            <div class="p-seekbar-background">
+                                <div class="p-seekbar-loading"></div>
+                                <div class="p-seekbar-position"></div>
+                                <div class="p-seekbar-progress"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <span class="p-player__controls__play">
-                    <i id="p-play-pause-button" class="material-icons">play_arrow</i>
-                </span>
-                <span class="p-player__controls__next">
-                    <i class="material-icons">skip_next</i>
-                </span>
-                <span class="p-audio-container">
-                    <span class="p-audio-container-icon">
-                    <i id="p-audio-toggle-button" class="material-icons">volume_up</i>
+                    <span class="p-player__controls__play">
+                        <i id="p-play-pause-button" class="material-icons">play_arrow</i>
                     </span>
-                    <span class="p-audio-container-bar">
-                        <input id="p-audio-range-input" class="white" type="range" min="0" max="100">
+                    <span class="p-player__controls__next">
+                        <i class="material-icons">skip_next</i>
                     </span>
-                </span>
-                <span class="p-player__controls__current-time">
-                    <span id="p-current-time">00:00</span> / 
-                    <span id="p-total-time">00:00</span>
-                </span>                
-                <span class="right" style="margin-top: 8px;">
-                    <span class="p-config-container"><i class="material-icons">settings</i></span>
-                    <i id="p-button-fullscreen" class="material-icons">fullscreen</i>
-                </span>
-                
-            </div>  
+                    <span class="p-audio-container">
+                        <span class="p-audio-container-icon">
+                        <i id="p-audio-toggle-button" class="material-icons">volume_up</i>
+                        </span>
+                        <span class="p-audio-container-bar">
+                            <input id="p-audio-range-input" class="white" type="range" min="0" max="100">
+                        </span>
+                    </span>
+                    <span class="p-player__controls__current-time">
+                        <span id="p-current-time">00:00</span> / 
+                        <span id="p-total-time">00:00</span>
+                    </span>                
+                    <span class="right" style="margin-top: 8px;">
+
+                        <div class="p-config-container">
+                            <div class="p-config-menu-container">
+                                <ul class="p-config-itens cf">
+                                    <li class="p-config-item">
+                                    <span class="p-config-item__title">Item #1</span>
+                                    <span class="p-config-item__value">Value #1</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <i class="p-setting-toggle material-icons">settings</i>
+                        </div>
+                        <i id="p-button-fullscreen" class="material-icons">fullscreen</i>
+                    </span>
+                    
+                </div>  
+            </div>
         </div>
+        
         <script src="js/main.js"></script>
     </body>
 </html>

@@ -159,6 +159,57 @@ textarea {
   display: block;
 }
 
+.p-setting-toggle {
+  transition: all .2s ease-out;
+}
+
+.p-setting-toggle.active {
+  transform: rotate(45deg);
+}
+
+.p-config-container {
+  position: relative;
+  display: inline-block;
+}
+
+
+
+.p-config-menu-container {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 60px;
+  white-space: nowrap;
+
+  background-color: rgba(30, 30, 30, 0.8);
+
+}
+
+.p-config-menu-container.active {
+  display: block;
+}
+
+.p-config-itens {
+  list-style: none;
+  padding-left: 0;
+}
+.p-config-item {
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  display: inline;
+}
+
+.p-config-item__title {
+  margin-right: 40px;
+  display: inline-block;
+}
+
+.p-config-item__value {
+  display: inline-block; 
+}
 
 .p-player:hover .p-player__controls  {
     bottom: 0;
@@ -279,8 +330,18 @@ input[type=range].white:focus::-ms-fill-upper {
   background: #ffffff;
 }
 
+/* ==========================================================================
+   Page CSS
+   ========================================================================== */
+  .container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 960px;
+  }
 
-
+  .p-player {
+    width: 100%;
+  }
 
 
 /* ==========================================================================

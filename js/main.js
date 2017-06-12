@@ -3,6 +3,7 @@
 var controlPanel = (function () {
 
 	var currentVideo;
+	var menuContainer;
 	var playerControls;
 	var currentTime;
 	var timeBaloon;
@@ -18,6 +19,7 @@ var controlPanel = (function () {
 	}
 	function init() {
 		currentVideo = document.getElementById('p-current-video');	
+		menuContainer = document.querySelector('.p-config-menu-container');
 		seekbarProgress = document.querySelector('.p-seekbar-progress');
 		seekbarLoading = document.querySelector('.p-seekbar-loading');
 		seekbarBackground = document.querySelector('.p-seekbar-background');
@@ -119,8 +121,9 @@ var controlPanel = (function () {
 
 	function _showTimeBaloon(e, xOffset, yOffset) {
 		var posPercent = _calculateCursorPercentage(e);
-		var baloonXpos = e.clientX - (timeBaloon.offsetWidth/2);
 		var seekRect = _getBackgroundSeekerRect();
+		var baloonXpos = e.clientX - seekRect.left - (timeBaloon.offsetWidth/2);
+		
 
 		//If extreme left of the player
 		if(baloonXpos <= 0 )
@@ -165,7 +168,6 @@ var controlPanel = (function () {
 		    var range = 0;
 		    var bf = this.buffered;
 		    var time = this.currentTime;
-		    console.log(bf);
 
 		    while(!(bf.start(range) <= time && time <= bf.end(range))) {
 		        range += 1;
@@ -227,7 +229,51 @@ var controlPanel = (function () {
 		buttons.volumeToggle.addEventListener('click',function(){ _toggleSound()} );
 		buttons.fullscreen = document.querySelector("#p-button-fullscreen");
 		buttons.fullscreen.addEventListener('click',function(){ setFullscreen()} );
+		buttons.settingToggle = document.querySelector(".p-setting-toggle");
+		
+		buttons.settingToggle.addEventListener('click', function(){
+			html.toggleClass(this, 'active');
+			html.toggleClass(menuContainer, 'active');
+		});
+
 	}
+
+	var html = {
+		
+		hasClass: function(element, cls) {
+			return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+		},
+
+		addClass: function(element, cls) {
+			element.className += ' '+ cls + ' ';
+		},
+
+		removeClass: function(element, cls) {
+
+		    var newClassName = "";
+		    var i;
+		    var classes = element.className.split(" ");
+		    for(i = 0; i < classes.length; i++) {
+		        if(classes[i] !== cls) {
+		            newClassName += classes[i] + " ";
+		        }
+		    }
+		    element.className = newClassName;
+		},
+
+		toggleClass: function(element, cls ) {
+			if( this.hasClass(element,cls) ) {
+				this.removeClass(element, cls);
+			}
+			else {
+				this.addClass(element, cls);	
+			}
+
+		}
+
+	};
+
+
 
 	return {
 		init: init,
