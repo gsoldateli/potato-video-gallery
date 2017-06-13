@@ -1,0 +1,26 @@
+Rafael Acyoli: https://www.facebook.com/rafa.acioly?fref=ufi
+
+Legal, você poderia filtrar um pouco dos "var" e colocar apenas 1 separando o restante por virgula, por exemplo:
+var currentVideo,
+menuContainer,
+playerControls,
+currentTime,
+...;
+Tenta tambem retornar a função o mais rapido que puder, em algumas funções você pode remover os "elses":
+if (currentVideo.paused) {
+play(); 
+return;
+}
+
+---------------------
+
+Guilherme, você tambem pode usar operador ternario no lugar de if e else:
+function volume(volume) {
+return volume === undefined ? currentVideo.volume : (currentVideo.volume = volume)
+}
+
+--------------------
+
+Daniel Rios: https://www.facebook.com/TheDaniel549?fref=ufi
+
+Dentro do addEventListener, vc não precisa chamar a função dentro de uma função anônima "function(){ _toggleSound()}", vc pode chamar direto a função "_toggleSound()" depois do evento, acho que até sem parênteses dá certo

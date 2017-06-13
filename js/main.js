@@ -63,14 +63,8 @@ var controlPanel = (function () {
 	}
 
 	function volume(volume) {
-		
-		if(volume === undefined )
-		{
-			return currentVideo.volume;
-		}
-
-		currentVideo.volume = volume;
-		
+		volume === undefined ? currentVideo.volume : (currentVideo.volume = volume);
+		return currentVideo.volume;
 	}
 
 	function ended(fn) {
@@ -80,12 +74,17 @@ var controlPanel = (function () {
 	function setFullscreen() {
 		if (currentVideo.requestFullscreen) {
 			currentVideo.requestFullscreen();
+			return;
 		} 
-		else if (currentVideo.mozRequestFullScreen) {
+		
+		if (currentVideo.mozRequestFullScreen) {
 			currentVideo.mozRequestFullScreen();
+			return;
 		} 
-		else if (currentVideo.webkitRequestFullscreen) {
+		
+		if (currentVideo.webkitRequestFullscreen) {
 			currentVideo.webkitRequestFullscreen();
+			return;
 		}		
 	}
 
@@ -94,12 +93,8 @@ var controlPanel = (function () {
 	}
 
 	function _playPause() {
-		if( currentVideo.paused ) {
-			play();
-		}
-		else {
-			pause();
-		}
+
+		currentVideo.paused ? play() : pause();
 	}
 
 	function _calculateCursorPercentage(e) {
@@ -193,45 +188,42 @@ var controlPanel = (function () {
 
 	function _setVolume() {
 		var inputValue = buttons.volume.value;
+
+		volume(inputValue / 100);
+
 		if(parseInt(inputValue) === 0) {
 			buttons.volumeToggle.innerHTML = 'volume_off';
+			return;
 		}
 		else if(inputValue < 50) {
 			buttons.volumeToggle.innerHTML = 'volume_down';
+			return;
 		}
 		else {
 			buttons.volumeToggle.innerHTML = 'volume_up';
+			return;
 		}
-
-		volume(inputValue / 100);
 	}
 
 	function _toggleSound() {
-
-		if ( parseInt(volume()) > 0 ) {
-			buttons.volume.value = 0;
-		} else {
-			buttons.volume.value =100;
-			
-		}
+		(parseInt(volume()) > 0) ? (buttons.volume.value = 0) : (buttons.volume.value =100);
 		_setVolume();
-		
 	}
 
 	function _registerButtons() {
 		buttons.playPause = document.querySelector("#p-play-pause-button");
-		buttons.playPause.addEventListener('click',function(){ _playPause()} );
+		buttons.playPause.addEventListener('click', _playPause );
 		
 		buttons.volume = document.querySelector("#p-audio-range-input");
-		buttons.volume.addEventListener("mousemove", function(){ _setVolume(); });
+		buttons.volume.addEventListener("mousemove", _setVolume );
 		
 		buttons.volumeToggle = document.querySelector("#p-audio-toggle-button");
-		buttons.volumeToggle.addEventListener('click',function(){ _toggleSound()} );
+		buttons.volumeToggle.addEventListener('click', _toggleSound );
 		buttons.fullscreen = document.querySelector("#p-button-fullscreen");
-		buttons.fullscreen.addEventListener('click',function(){ setFullscreen()} );
+		buttons.fullscreen.addEventListener('click', setFullscreen );
 		buttons.settingToggle = document.querySelector(".p-setting-toggle");
 		
-		buttons.settingToggle.addEventListener('click', function(){
+		buttons.settingToggle.addEventListener('click', function() {
 			html.toggleClass(this, 'active');
 			html.toggleClass(menuContainer, 'active');
 		});
