@@ -165,7 +165,7 @@ textarea {
     opacity: 1;
 }
 
-.p-time-baloon {
+.p-baloon {
   position: absolute;
   left: 0;
   bottom: 20px;
@@ -178,7 +178,11 @@ textarea {
   color: #fff;
 }
 
-.p-seekbar-container:hover .p-time-baloon {
+.p-seekbar-container:hover .p-baloon {
+  display: block;
+}
+
+.p-baloon--active {
   display: block;
 }
 

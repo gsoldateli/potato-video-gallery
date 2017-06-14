@@ -6,7 +6,7 @@ var controlPanel = (function () {
 	var menuContainer;
 	var playerControls;
 	var currentTime;
-	var timeBaloon;
+	var baloon;
 	var seekbarBackground;
 	var seekbarProgress;
 	var seekbarPosition;
@@ -26,7 +26,7 @@ var controlPanel = (function () {
 		seekbarPosition = document.querySelector('.p-seekbar-position');
 		totalTime = document.getElementById('p-total-time');
 		currentTime = document.getElementById('p-current-time');
-		timeBaloon = document.querySelector('.p-time-baloon');
+		baloon = document.querySelector('.p-baloon');
 		playerControls = document.querySelector('.p-player__controls');	
 
 
@@ -46,7 +46,26 @@ var controlPanel = (function () {
 
 		currentVideo.addEventListener('progress', _updateSeekbarLoading);
 
+		_initTitle();
+
 	}
+
+	function _initTitle() {
+		var elTitles = document.querySelectorAll('[data-title]');
+
+		elTitles.forEach(function (el, i) {
+		    // código...
+		    el.addEventListener('mouseover', function() {
+	    		_showTitle(el);
+		    });
+			
+			el.addEventListener('mouseout', _hideTitle );
+
+		    console.log(i, el);
+		});
+	}
+
+
 
 	function play() {
 		currentVideo.play();
@@ -113,29 +132,53 @@ var controlPanel = (function () {
 		return seekbarBackground.getBoundingClientRect();
 	}
 
-
-	function _showTimeBaloon(e, xOffset, yOffset) {
-		var posPercent = _calculateCursorPercentage(e);
+	function _showTitle(el) {
 		var seekRect = _getBackgroundSeekerRect();
-		var baloonXpos = e.clientX - seekRect.left - (timeBaloon.offsetWidth/2);
-		
+		console.log(el.dataset.title);
+		var titleXpos = (el.offsetLeft - (el.offsetWidth/2));
+
+		//FIXME Fullscreen title doesn't position right.
+		titleXpos = _protectBoundaries(titleXpos);
+
+		baloon.style.left = titleXpos + 'px';
+		baloon.innerHTML = el.dataset.title;
+		html.addClass(baloon,'p-baloon--active');
+	}
+
+	function _hideTitle() {
+		html.removeClass(baloon,'p-baloon--active');
+	}
+
+	function _protectBoundaries(xPos) {
+		var seekRect = _getBackgroundSeekerRect();
 
 		//If extreme left of the player
-		if(baloonXpos <= 0 )
+		if(xPos <= 0 )
 		{
 			//Fix position at left
-			baloonXpos = 0;
+			xPos = 0;
 		}
 		//Or extreme right of the player
-		else if( baloonXpos >= (seekRect.width - (timeBaloon.offsetWidth)) ) {
+		else if( xPos >= (seekRect.width - (baloon.offsetWidth)) ) {
 			//Fix position at right
-			baloonXpos = (seekRect.width - (timeBaloon.offsetWidth));
+			xPos = (seekRect.width - (baloon.offsetWidth));
 		}
 
-		timeBaloon.style.left = baloonXpos+'px';
+		return xPos;		
+	}
+
+	function _showTimeBaloon(e) {
+		var posPercent = _calculateCursorPercentage(e);
+		var seekRect = _getBackgroundSeekerRect();
+
+		var baloonXpos = e.clientX - seekRect.left - (baloon.offsetWidth/2);
+		
+		baloonXpos = _protectBoundaries(baloonXpos);
+
+		baloon.style.left = baloonXpos+'px';
 
 
-		timeBaloon.innerHTML = (_readableTime((currentVideo.duration / 100) * posPercent));
+		baloon.innerHTML = (_readableTime((currentVideo.duration / 100) * posPercent));
 	}
 
 	function _changeTime(e) {
