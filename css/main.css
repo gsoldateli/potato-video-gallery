@@ -55,6 +55,14 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+::cue {
+  color: red;
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  margin-bottom: 30px;
+}
+
 .p-player {
     position: relative;
     overflow: hidden;

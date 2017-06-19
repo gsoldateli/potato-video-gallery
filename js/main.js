@@ -2,16 +2,16 @@
 
 var controlPanel = (function () {
 
-	var currentVideo;
-	var menuContainer;
-	var playerControls;
-	var currentTime;
-	var baloon;
-	var seekbarBackground;
-	var seekbarProgress;
-	var seekbarPosition;
-	var seekbarLoading;
-	var totalTime;
+	var currentVideo,
+		menuContainer,
+		playerControls,
+		currentTime,
+		baloon,
+		seekbarBackground,
+		seekbarProgress,
+		seekbarPosition,
+		seekbarLoading,
+		totalTime;
 
 	var buttons = {};
 	function currentVideo() {
@@ -133,16 +133,21 @@ var controlPanel = (function () {
 	}
 
 	function _showTitle(el) {
-		var seekRect = _getBackgroundSeekerRect();
-		console.log(el.dataset.title);
-		var titleXpos = (el.offsetLeft - (el.offsetWidth/2));
-
-		//FIXME Fullscreen title doesn't position right.
-		titleXpos = _protectBoundaries(titleXpos);
-
-		baloon.style.left = titleXpos + 'px';
+		//Display block must be here, otherwise baloonRect.width will be 0
 		baloon.innerHTML = el.dataset.title;
 		html.addClass(baloon,'p-baloon--active');
+
+		var seekRect = _getBackgroundSeekerRect();
+		var baloonRect = baloon.getBoundingClientRect();
+
+		var titleXpos = (el.offsetLeft - (baloonRect.width/2.8));
+
+		titleXpos = _protectBoundaries(titleXpos);
+
+		
+
+		baloon.style.left = titleXpos + 'px';
+		
 	}
 
 	function _hideTitle() {
@@ -151,7 +156,8 @@ var controlPanel = (function () {
 
 	function _protectBoundaries(xPos) {
 		var seekRect = _getBackgroundSeekerRect();
-
+		//xPos += baloon.offsetWidth;
+		//console.log(xPos,baloon.offsetWidth);
 		//If extreme left of the player
 		if(xPos <= 0 )
 		{
@@ -236,14 +242,20 @@ var controlPanel = (function () {
 
 		if(parseInt(inputValue) === 0) {
 			buttons.volumeToggle.innerHTML = 'volume_off';
+			buttons.volumeToggle.dataset.title =
+			baloon.innerHTML = "Turn On";
 			return;
 		}
 		else if(inputValue < 50) {
 			buttons.volumeToggle.innerHTML = 'volume_down';
+			buttons.volumeToggle.dataset.title =
+			baloon.innerHTML = "Turn Off";
 			return;
 		}
 		else {
 			buttons.volumeToggle.innerHTML = 'volume_up';
+			buttons.volumeToggle.dataset.title =
+			baloon.innerHTML = "Turn Off";
 			return;
 		}
 	}

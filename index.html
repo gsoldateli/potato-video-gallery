@@ -24,8 +24,16 @@
             <h3>An aspiring Youtube like Player Made Just 4 Fun (Works only in chrome)</h3>
             <p>More info at: <a href="https://github.com/gsoldateli/potato-video-gallery">Potato Video Player Github Page</a> </p>
             <div class="p-player">
-                <video id="p-current-video" class="p-player__video" >
-                    <source src="http://mainline.i3s.unice.fr/mooc/elephants-dream-medium.mp4" type="video/mp4">
+                <video id="p-current-video" 
+                class="p-player__video" 
+                crossorigin="anonymous"
+                >
+                   <source src="http://mainline.i3s.unice.fr/mooc/sintel.mp4"
+                           type="video/mp4">
+                   <source src="http://mainline.i3s.unice.fr/mooc/sintel.webm"
+                           type="video/webm">
+                   <track src="captions.vtt"
+                          kind="captions" label="Closed Captions" default>
                 </video>
 
                 <div class="p-player__controls">
